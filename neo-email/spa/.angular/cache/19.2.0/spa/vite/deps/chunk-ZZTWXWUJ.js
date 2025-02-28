@@ -1,8 +1,12 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
+import {
+  BidiModule
+} from "./chunk-TKLSNSMO.js";
+import {
+  _CdkPrivateStyleLoader,
+  _VisuallyHiddenLoader
+} from "./chunk-IF6T2ZTP.js";
 import {
   Platform,
-  _CdkPrivateStyleLoader,
-  _VisuallyHiddenLoader,
   _bindEventWithOptions,
   _getEventTarget,
   _getFocusedElementPierceShadowDom,
@@ -11,16 +15,14 @@ import {
   coerceElement,
   coerceNumberProperty,
   normalizePassiveListenerOptions
-} from "./chunk-WXAOBIIR.js";
-import {
-  BidiModule
-} from "./chunk-LKNM4EWF.js";
+} from "./chunk-3K3273OS.js";
 import {
   DOCUMENT
-} from "./chunk-BMOTRGRB.js";
+} from "./chunk-K5UB3T5J.js";
 import {
   ANIMATION_MODULE_TYPE,
   APP_ID,
+  BehaviorSubject,
   CSP_NONCE,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -35,19 +37,37 @@ import {
   LOCALE_ID,
   NgModule,
   NgZone,
+  Observable,
   Output,
   QueryList,
   RendererFactory2,
+  Subject,
+  Subscription,
   Version,
   ViewChild,
   ViewEncapsulation,
+  __spreadProps,
+  __spreadValues,
   afterNextRender,
   booleanAttribute,
+  combineLatest,
+  concat,
+  debounceTime,
+  distinctUntilChanged,
+  effect,
+  filter,
   inject,
+  isObservable,
   isSignal,
-  require_cjs,
-  require_operators,
+  map,
+  of,
   setClassMetadata,
+  signal,
+  skip,
+  startWith,
+  take,
+  takeUntil,
+  tap,
   ɵɵNgOnChangesFeature,
   ɵɵProvidersFeature,
   ɵɵadvance,
@@ -74,16 +94,46 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate1,
   ɵɵviewQuery
-} from "./chunk-Q2625NID.js";
-import {
-  __spreadProps,
-  __spreadValues,
-  __toESM
-} from "./chunk-YHCV7DAQ.js";
+} from "./chunk-ZB77F6IA.js";
+
+// node_modules/@angular/cdk/fesm2022/keycodes.mjs
+var TAB = 9;
+var ENTER = 13;
+var SHIFT = 16;
+var CONTROL = 17;
+var ALT = 18;
+var ESCAPE = 27;
+var SPACE = 32;
+var PAGE_UP = 33;
+var PAGE_DOWN = 34;
+var END = 35;
+var HOME = 36;
+var LEFT_ARROW = 37;
+var UP_ARROW = 38;
+var RIGHT_ARROW = 39;
+var DOWN_ARROW = 40;
+var ZERO = 48;
+var NINE = 57;
+var A = 65;
+var Z = 90;
+var META = 91;
+var MAC_META = 224;
+function hasModifierKey(event, ...modifiers) {
+  if (modifiers.length) {
+    return modifiers.some((modifier) => event[modifier]);
+  }
+  return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
+}
+
+// node_modules/@angular/cdk/fesm2022/coercion/private.mjs
+function coerceObservable(data) {
+  if (!isObservable(data)) {
+    return of(data);
+  }
+  return data;
+}
 
 // node_modules/@angular/cdk/fesm2022/observers.mjs
-var import_rxjs = __toESM(require_cjs(), 1);
-var import_operators = __toESM(require_operators(), 1);
 function shouldIgnoreRecord(record) {
   if (record.type === "characterData" && record.target instanceof Comment) {
     return true;
@@ -136,9 +186,9 @@ var ContentObserver = class _ContentObserver {
   }
   observe(elementOrRef) {
     const element = coerceElement(elementOrRef);
-    return new import_rxjs.Observable((observer) => {
+    return new Observable((observer) => {
       const stream = this._observeElement(element);
-      const subscription = stream.pipe((0, import_operators.map)((records) => records.filter((record) => !shouldIgnoreRecord(record))), (0, import_operators.filter)((records) => !!records.length)).subscribe((records) => {
+      const subscription = stream.pipe(map((records) => records.filter((record) => !shouldIgnoreRecord(record))), filter((records) => !!records.length)).subscribe((records) => {
         this._ngZone.run(() => {
           observer.next(records);
         });
@@ -156,7 +206,7 @@ var ContentObserver = class _ContentObserver {
   _observeElement(element) {
     return this._ngZone.runOutsideAngular(() => {
       if (!this._observedElements.has(element)) {
-        const stream = new import_rxjs.Subject();
+        const stream = new Subject();
         const observer = this._mutationObserverFactory.create((mutations) => stream.next(mutations));
         if (observer) {
           observer.observe(element, {
@@ -259,7 +309,7 @@ var CdkObserveContent = class _CdkObserveContent {
   _subscribe() {
     this._unsubscribe();
     const stream = this._contentObserver.observe(this._elementRef);
-    this._currentSubscription = (this.debounce ? stream.pipe((0, import_operators.debounceTime)(this.debounce)) : stream).subscribe(this.event);
+    this._currentSubscription = (this.debounce ? stream.pipe(debounceTime(this.debounce)) : stream).subscribe(this.event);
   }
   _unsubscribe() {
     this._currentSubscription?.unsubscribe();
@@ -329,8 +379,6 @@ var ObserversModule = class _ObserversModule {
 })();
 
 // node_modules/@angular/cdk/fesm2022/layout.mjs
-var import_rxjs2 = __toESM(require_cjs(), 1);
-var import_operators2 = __toESM(require_operators(), 1);
 var LayoutModule = class _LayoutModule {
   static ɵfac = function LayoutModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _LayoutModule)();
@@ -428,7 +476,7 @@ var BreakpointObserver = class _BreakpointObserver {
   /**  A map of all media queries currently being listened for. */
   _queries = /* @__PURE__ */ new Map();
   /** A subject for all other observables to takeUntil based on. */
-  _destroySubject = new import_rxjs2.Subject();
+  _destroySubject = new Subject();
   constructor() {
   }
   /** Completes the active subject, signalling to all other observables to complete. */
@@ -454,9 +502,9 @@ var BreakpointObserver = class _BreakpointObserver {
   observe(value) {
     const queries = splitQueries(coerceArray(value));
     const observables = queries.map((query) => this._registerQuery(query).observable);
-    let stateObservable = (0, import_rxjs2.combineLatest)(observables);
-    stateObservable = (0, import_rxjs2.concat)(stateObservable.pipe((0, import_operators2.take)(1)), stateObservable.pipe((0, import_operators2.skip)(1), (0, import_operators2.debounceTime)(0)));
-    return stateObservable.pipe((0, import_operators2.map)((breakpointStates) => {
+    let stateObservable = combineLatest(observables);
+    stateObservable = concat(stateObservable.pipe(take(1)), stateObservable.pipe(skip(1), debounceTime(0)));
+    return stateObservable.pipe(map((breakpointStates) => {
       const response = {
         matches: false,
         breakpoints: {}
@@ -477,18 +525,18 @@ var BreakpointObserver = class _BreakpointObserver {
       return this._queries.get(query);
     }
     const mql = this._mediaMatcher.matchMedia(query);
-    const queryObservable = new import_rxjs2.Observable((observer) => {
+    const queryObservable = new Observable((observer) => {
       const handler = (e) => this._zone.run(() => observer.next(e));
       mql.addListener(handler);
       return () => {
         mql.removeListener(handler);
       };
-    }).pipe((0, import_operators2.startWith)(mql), (0, import_operators2.map)(({
+    }).pipe(startWith(mql), map(({
       matches
     }) => ({
       query,
       matches
-    })), (0, import_operators2.takeUntil)(this._destroySubject));
+    })), takeUntil(this._destroySubject));
     const output = {
       observable: queryObservable,
       mql
@@ -532,39 +580,6 @@ var Breakpoints = {
   TabletLandscape: "(min-width: 960px) and (max-width: 1279.98px) and (orientation: landscape)",
   WebLandscape: "(min-width: 1280px) and (orientation: landscape)"
 };
-
-// node_modules/@angular/cdk/fesm2022/keycodes.mjs
-var ENTER = 13;
-var SHIFT = 16;
-var CONTROL = 17;
-var ALT = 18;
-var ESCAPE = 27;
-var SPACE = 32;
-var ZERO = 48;
-var NINE = 57;
-var A = 65;
-var Z = 90;
-var META = 91;
-var MAC_META = 224;
-function hasModifierKey(event, ...modifiers) {
-  if (modifiers.length) {
-    return modifiers.some((modifier) => event[modifier]);
-  }
-  return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
-}
-
-// node_modules/@angular/cdk/fesm2022/a11y.mjs
-var import_rxjs4 = __toESM(require_cjs(), 1);
-var import_operators3 = __toESM(require_operators(), 1);
-
-// node_modules/@angular/cdk/fesm2022/coercion/private.mjs
-var import_rxjs3 = __toESM(require_cjs(), 1);
-function coerceObservable(data) {
-  if (!(0, import_rxjs3.isObservable)(data)) {
-    return (0, import_rxjs3.of)(data);
-  }
-  return data;
-}
 
 // node_modules/@angular/cdk/fesm2022/a11y.mjs
 var ID_DELIMITER = " ";
@@ -773,13 +788,13 @@ function setMessageId(element, serviceId) {
 }
 var DEFAULT_TYPEAHEAD_DEBOUNCE_INTERVAL_MS = 200;
 var Typeahead = class {
-  _letterKeyStream = new import_rxjs4.Subject();
+  _letterKeyStream = new Subject();
   _items = [];
   _selectedItemIndex = -1;
   /** Buffer for the letters that the user has pressed */
   _pressedLetters = [];
   _skipPredicateFn;
-  _selectedItem = new import_rxjs4.Subject();
+  _selectedItem = new Subject();
   selectedItem = this._selectedItem;
   constructor(initialItems, config) {
     const typeAheadInterval = typeof config?.debounceInterval === "number" ? config.debounceInterval : DEFAULT_TYPEAHEAD_DEBOUNCE_INTERVAL_MS;
@@ -820,7 +835,7 @@ var Typeahead = class {
     this._pressedLetters = [];
   }
   _setupKeyHandler(typeAheadInterval) {
-    this._letterKeyStream.pipe((0, import_operators3.tap)((letter) => this._pressedLetters.push(letter)), (0, import_operators3.debounceTime)(typeAheadInterval), (0, import_operators3.filter)(() => this._pressedLetters.length > 0), (0, import_operators3.map)(() => this._pressedLetters.join("").toLocaleUpperCase())).subscribe((inputString) => {
+    this._letterKeyStream.pipe(tap((letter) => this._pressedLetters.push(letter)), debounceTime(typeAheadInterval), filter(() => this._pressedLetters.length > 0), map(() => this._pressedLetters.join("").toLocaleUpperCase())).subscribe((inputString) => {
       for (let i = 1; i < this._items.length + 1; i++) {
         const index = (this._selectedItemIndex + i) % this._items.length;
         const item = this._items[index];
@@ -831,6 +846,355 @@ var Typeahead = class {
       }
       this._pressedLetters = [];
     });
+  }
+};
+var ListKeyManager = class {
+  _items;
+  _activeItemIndex = -1;
+  _activeItem = signal(null);
+  _wrap = false;
+  _typeaheadSubscription = Subscription.EMPTY;
+  _itemChangesSubscription;
+  _vertical = true;
+  _horizontal;
+  _allowedModifierKeys = [];
+  _homeAndEnd = false;
+  _pageUpAndDown = {
+    enabled: false,
+    delta: 10
+  };
+  _effectRef;
+  _typeahead;
+  /**
+   * Predicate function that can be used to check whether an item should be skipped
+   * by the key manager. By default, disabled items are skipped.
+   */
+  _skipPredicateFn = (item) => item.disabled;
+  constructor(_items, injector) {
+    this._items = _items;
+    if (_items instanceof QueryList) {
+      this._itemChangesSubscription = _items.changes.subscribe((newItems) => this._itemsChanged(newItems.toArray()));
+    } else if (isSignal(_items)) {
+      if (!injector && (typeof ngDevMode === "undefined" || ngDevMode)) {
+        throw new Error("ListKeyManager constructed with a signal must receive an injector");
+      }
+      this._effectRef = effect(() => this._itemsChanged(_items()), {
+        injector
+      });
+    }
+  }
+  /**
+   * Stream that emits any time the TAB key is pressed, so components can react
+   * when focus is shifted off of the list.
+   */
+  tabOut = new Subject();
+  /** Stream that emits whenever the active item of the list manager changes. */
+  change = new Subject();
+  /**
+   * Sets the predicate function that determines which items should be skipped by the
+   * list key manager.
+   * @param predicate Function that determines whether the given item should be skipped.
+   */
+  skipPredicate(predicate) {
+    this._skipPredicateFn = predicate;
+    return this;
+  }
+  /**
+   * Configures wrapping mode, which determines whether the active item will wrap to
+   * the other end of list when there are no more items in the given direction.
+   * @param shouldWrap Whether the list should wrap when reaching the end.
+   */
+  withWrap(shouldWrap = true) {
+    this._wrap = shouldWrap;
+    return this;
+  }
+  /**
+   * Configures whether the key manager should be able to move the selection vertically.
+   * @param enabled Whether vertical selection should be enabled.
+   */
+  withVerticalOrientation(enabled = true) {
+    this._vertical = enabled;
+    return this;
+  }
+  /**
+   * Configures the key manager to move the selection horizontally.
+   * Passing in `null` will disable horizontal movement.
+   * @param direction Direction in which the selection can be moved.
+   */
+  withHorizontalOrientation(direction) {
+    this._horizontal = direction;
+    return this;
+  }
+  /**
+   * Modifier keys which are allowed to be held down and whose default actions will be prevented
+   * as the user is pressing the arrow keys. Defaults to not allowing any modifier keys.
+   */
+  withAllowedModifierKeys(keys) {
+    this._allowedModifierKeys = keys;
+    return this;
+  }
+  /**
+   * Turns on typeahead mode which allows users to set the active item by typing.
+   * @param debounceInterval Time to wait after the last keystroke before setting the active item.
+   */
+  withTypeAhead(debounceInterval = 200) {
+    if (typeof ngDevMode === "undefined" || ngDevMode) {
+      const items2 = this._getItemsArray();
+      if (items2.length > 0 && items2.some((item) => typeof item.getLabel !== "function")) {
+        throw Error("ListKeyManager items in typeahead mode must implement the `getLabel` method.");
+      }
+    }
+    this._typeaheadSubscription.unsubscribe();
+    const items = this._getItemsArray();
+    this._typeahead = new Typeahead(items, {
+      debounceInterval: typeof debounceInterval === "number" ? debounceInterval : void 0,
+      skipPredicate: (item) => this._skipPredicateFn(item)
+    });
+    this._typeaheadSubscription = this._typeahead.selectedItem.subscribe((item) => {
+      this.setActiveItem(item);
+    });
+    return this;
+  }
+  /** Cancels the current typeahead sequence. */
+  cancelTypeahead() {
+    this._typeahead?.reset();
+    return this;
+  }
+  /**
+   * Configures the key manager to activate the first and last items
+   * respectively when the Home or End key is pressed.
+   * @param enabled Whether pressing the Home or End key activates the first/last item.
+   */
+  withHomeAndEnd(enabled = true) {
+    this._homeAndEnd = enabled;
+    return this;
+  }
+  /**
+   * Configures the key manager to activate every 10th, configured or first/last element in up/down direction
+   * respectively when the Page-Up or Page-Down key is pressed.
+   * @param enabled Whether pressing the Page-Up or Page-Down key activates the first/last item.
+   * @param delta Whether pressing the Home or End key activates the first/last item.
+   */
+  withPageUpDown(enabled = true, delta = 10) {
+    this._pageUpAndDown = {
+      enabled,
+      delta
+    };
+    return this;
+  }
+  setActiveItem(item) {
+    const previousActiveItem = this._activeItem();
+    this.updateActiveItem(item);
+    if (this._activeItem() !== previousActiveItem) {
+      this.change.next(this._activeItemIndex);
+    }
+  }
+  /**
+   * Sets the active item depending on the key event passed in.
+   * @param event Keyboard event to be used for determining which element should be active.
+   */
+  onKeydown(event) {
+    const keyCode = event.keyCode;
+    const modifiers = ["altKey", "ctrlKey", "metaKey", "shiftKey"];
+    const isModifierAllowed = modifiers.every((modifier) => {
+      return !event[modifier] || this._allowedModifierKeys.indexOf(modifier) > -1;
+    });
+    switch (keyCode) {
+      case TAB:
+        this.tabOut.next();
+        return;
+      case DOWN_ARROW:
+        if (this._vertical && isModifierAllowed) {
+          this.setNextItemActive();
+          break;
+        } else {
+          return;
+        }
+      case UP_ARROW:
+        if (this._vertical && isModifierAllowed) {
+          this.setPreviousItemActive();
+          break;
+        } else {
+          return;
+        }
+      case RIGHT_ARROW:
+        if (this._horizontal && isModifierAllowed) {
+          this._horizontal === "rtl" ? this.setPreviousItemActive() : this.setNextItemActive();
+          break;
+        } else {
+          return;
+        }
+      case LEFT_ARROW:
+        if (this._horizontal && isModifierAllowed) {
+          this._horizontal === "rtl" ? this.setNextItemActive() : this.setPreviousItemActive();
+          break;
+        } else {
+          return;
+        }
+      case HOME:
+        if (this._homeAndEnd && isModifierAllowed) {
+          this.setFirstItemActive();
+          break;
+        } else {
+          return;
+        }
+      case END:
+        if (this._homeAndEnd && isModifierAllowed) {
+          this.setLastItemActive();
+          break;
+        } else {
+          return;
+        }
+      case PAGE_UP:
+        if (this._pageUpAndDown.enabled && isModifierAllowed) {
+          const targetIndex = this._activeItemIndex - this._pageUpAndDown.delta;
+          this._setActiveItemByIndex(targetIndex > 0 ? targetIndex : 0, 1);
+          break;
+        } else {
+          return;
+        }
+      case PAGE_DOWN:
+        if (this._pageUpAndDown.enabled && isModifierAllowed) {
+          const targetIndex = this._activeItemIndex + this._pageUpAndDown.delta;
+          const itemsLength = this._getItemsArray().length;
+          this._setActiveItemByIndex(targetIndex < itemsLength ? targetIndex : itemsLength - 1, -1);
+          break;
+        } else {
+          return;
+        }
+      default:
+        if (isModifierAllowed || hasModifierKey(event, "shiftKey")) {
+          this._typeahead?.handleKey(event);
+        }
+        return;
+    }
+    this._typeahead?.reset();
+    event.preventDefault();
+  }
+  /** Index of the currently active item. */
+  get activeItemIndex() {
+    return this._activeItemIndex;
+  }
+  /** The active item. */
+  get activeItem() {
+    return this._activeItem();
+  }
+  /** Gets whether the user is currently typing into the manager using the typeahead feature. */
+  isTyping() {
+    return !!this._typeahead && this._typeahead.isTyping();
+  }
+  /** Sets the active item to the first enabled item in the list. */
+  setFirstItemActive() {
+    this._setActiveItemByIndex(0, 1);
+  }
+  /** Sets the active item to the last enabled item in the list. */
+  setLastItemActive() {
+    this._setActiveItemByIndex(this._getItemsArray().length - 1, -1);
+  }
+  /** Sets the active item to the next enabled item in the list. */
+  setNextItemActive() {
+    this._activeItemIndex < 0 ? this.setFirstItemActive() : this._setActiveItemByDelta(1);
+  }
+  /** Sets the active item to a previous enabled item in the list. */
+  setPreviousItemActive() {
+    this._activeItemIndex < 0 && this._wrap ? this.setLastItemActive() : this._setActiveItemByDelta(-1);
+  }
+  updateActiveItem(item) {
+    const itemArray = this._getItemsArray();
+    const index = typeof item === "number" ? item : itemArray.indexOf(item);
+    const activeItem = itemArray[index];
+    this._activeItem.set(activeItem == null ? null : activeItem);
+    this._activeItemIndex = index;
+    this._typeahead?.setCurrentSelectedItemIndex(index);
+  }
+  /** Cleans up the key manager. */
+  destroy() {
+    this._typeaheadSubscription.unsubscribe();
+    this._itemChangesSubscription?.unsubscribe();
+    this._effectRef?.destroy();
+    this._typeahead?.destroy();
+    this.tabOut.complete();
+    this.change.complete();
+  }
+  /**
+   * This method sets the active item, given a list of items and the delta between the
+   * currently active item and the new active item. It will calculate differently
+   * depending on whether wrap mode is turned on.
+   */
+  _setActiveItemByDelta(delta) {
+    this._wrap ? this._setActiveInWrapMode(delta) : this._setActiveInDefaultMode(delta);
+  }
+  /**
+   * Sets the active item properly given "wrap" mode. In other words, it will continue to move
+   * down the list until it finds an item that is not disabled, and it will wrap if it
+   * encounters either end of the list.
+   */
+  _setActiveInWrapMode(delta) {
+    const items = this._getItemsArray();
+    for (let i = 1; i <= items.length; i++) {
+      const index = (this._activeItemIndex + delta * i + items.length) % items.length;
+      const item = items[index];
+      if (!this._skipPredicateFn(item)) {
+        this.setActiveItem(index);
+        return;
+      }
+    }
+  }
+  /**
+   * Sets the active item properly given the default mode. In other words, it will
+   * continue to move down the list until it finds an item that is not disabled. If
+   * it encounters either end of the list, it will stop and not wrap.
+   */
+  _setActiveInDefaultMode(delta) {
+    this._setActiveItemByIndex(this._activeItemIndex + delta, delta);
+  }
+  /**
+   * Sets the active item to the first enabled item starting at the index specified. If the
+   * item is disabled, it will move in the fallbackDelta direction until it either
+   * finds an enabled item or encounters the end of the list.
+   */
+  _setActiveItemByIndex(index, fallbackDelta) {
+    const items = this._getItemsArray();
+    if (!items[index]) {
+      return;
+    }
+    while (this._skipPredicateFn(items[index])) {
+      index += fallbackDelta;
+      if (!items[index]) {
+        return;
+      }
+    }
+    this.setActiveItem(index);
+  }
+  /** Returns the items as an array. */
+  _getItemsArray() {
+    if (isSignal(this._items)) {
+      return this._items();
+    }
+    return this._items instanceof QueryList ? this._items.toArray() : this._items;
+  }
+  /** Callback for when the items have changed. */
+  _itemsChanged(newItems) {
+    this._typeahead?.setItems(newItems);
+    const activeItem = this._activeItem();
+    if (activeItem) {
+      const newIndex = newItems.indexOf(activeItem);
+      if (newIndex > -1 && newIndex !== this._activeItemIndex) {
+        this._activeItemIndex = newIndex;
+        this._typeahead?.setCurrentSelectedItemIndex(newIndex);
+      }
+    }
+  }
+};
+var ActiveDescendantKeyManager = class extends ListKeyManager {
+  setActiveItem(index) {
+    if (this.activeItem) {
+      this.activeItem.setInactiveStyles();
+    }
+    super.setActiveItem(index);
+    if (this.activeItem) {
+      this.activeItem.setActiveStyles();
+    }
   }
 };
 var TreeKeyManager = class {
@@ -859,7 +1223,7 @@ var TreeKeyManager = class {
   /** Synchronous cache of the items to manage. */
   _items = [];
   _typeahead;
-  _typeaheadSubscription = import_rxjs4.Subscription.EMPTY;
+  _typeaheadSubscription = Subscription.EMPTY;
   _hasInitialFocused = false;
   _initializeFocus() {
     if (this._hasInitialFocused || this._items.length === 0) {
@@ -901,7 +1265,7 @@ var TreeKeyManager = class {
         this._updateActiveItemIndex(this._items);
         this._initializeFocus();
       });
-    } else if ((0, import_rxjs4.isObservable)(items)) {
+    } else if (isObservable(items)) {
       items.subscribe((newItems) => {
         this._items = newItems;
         this._typeahead?.setItems(newItems);
@@ -929,7 +1293,7 @@ var TreeKeyManager = class {
     }
   }
   /** Stream that emits any time the focused item changes. */
-  change = new import_rxjs4.Subject();
+  change = new Subject();
   /** Cleans up the key manager. */
   destroy() {
     this._typeaheadSubscription.unsubscribe();
@@ -1088,7 +1452,7 @@ var TreeKeyManager = class {
     if (!this._isCurrentItemExpanded()) {
       this._activeItem.expand();
     } else {
-      coerceObservable(this._activeItem.getChildren()).pipe((0, import_operators3.take)(1)).subscribe((children) => {
+      coerceObservable(this._activeItem.getChildren()).pipe(take(1)).subscribe((children) => {
         const firstChild = children.find((child) => !this._skipPredicateFn(child));
         if (!firstChild) {
           return;
@@ -1114,11 +1478,11 @@ var TreeKeyManager = class {
     const parent = this._activeItem.getParent();
     let itemsToExpand;
     if (!parent) {
-      itemsToExpand = (0, import_rxjs4.of)(this._items.filter((item) => item.getParent() === null));
+      itemsToExpand = of(this._items.filter((item) => item.getParent() === null));
     } else {
       itemsToExpand = coerceObservable(parent.getChildren());
     }
-    itemsToExpand.pipe((0, import_operators3.take)(1)).subscribe((items) => {
+    itemsToExpand.pipe(take(1)).subscribe((items) => {
       for (const item of items) {
         item.expand();
       }
@@ -1865,7 +2229,7 @@ var InputModalityDetector = class _InputModalityDetector {
    */
   _mostRecentTarget = null;
   /** The underlying BehaviorSubject that emits whenever an input modality is detected. */
-  _modality = new import_rxjs4.BehaviorSubject(null);
+  _modality = new BehaviorSubject(null);
   /** Options for this InputModalityDetector. */
   _options;
   /**
@@ -1915,8 +2279,8 @@ var InputModalityDetector = class _InputModalityDetector {
       optional: true
     });
     this._options = __spreadValues(__spreadValues({}, INPUT_MODALITY_DETECTOR_DEFAULT_OPTIONS), options);
-    this.modalityDetected = this._modality.pipe((0, import_operators3.skip)(1));
-    this.modalityChanged = this.modalityDetected.pipe((0, import_operators3.distinctUntilChanged)());
+    this.modalityDetected = this._modality.pipe(skip(1));
+    this.modalityChanged = this.modalityDetected.pipe(distinctUntilChanged());
     if (this._platform.isBrowser) {
       const renderer = inject(RendererFactory2).createRenderer(null, null);
       this._listenerCleanups = ngZone.runOutsideAngular(() => {
@@ -2203,7 +2567,7 @@ var FocusMonitor = class _FocusMonitor {
     optional: true
   });
   /** Subject for stopping our InputModalityDetector subscription. */
-  _stopInputModalityDetector = new import_rxjs4.Subject();
+  _stopInputModalityDetector = new Subject();
   constructor() {
     const options = inject(FOCUS_MONITOR_DEFAULT_OPTIONS, {
       optional: true
@@ -2227,7 +2591,7 @@ var FocusMonitor = class _FocusMonitor {
   monitor(element, checkChildren = false) {
     const nativeElement = coerceElement(element);
     if (!this._platform.isBrowser || nativeElement.nodeType !== 1) {
-      return (0, import_rxjs4.of)();
+      return of();
     }
     const rootNode = _getShadowRoot(nativeElement) || this._getDocument();
     const cachedInfo = this._elementInfo.get(nativeElement);
@@ -2239,7 +2603,7 @@ var FocusMonitor = class _FocusMonitor {
     }
     const info = {
       checkChildren,
-      subject: new import_rxjs4.Subject(),
+      subject: new Subject(),
       rootNode
     };
     this._elementInfo.set(nativeElement, info);
@@ -2386,7 +2750,7 @@ var FocusMonitor = class _FocusMonitor {
         const window2 = this._getWindow();
         window2.addEventListener("focus", this._windowFocusListener);
       });
-      this._inputModalityDetector.modalityDetected.pipe((0, import_operators3.takeUntil)(this._stopInputModalityDetector)).subscribe((modality) => {
+      this._inputModalityDetector.modalityDetected.pipe(takeUntil(this._stopInputModalityDetector)).subscribe((modality) => {
         this._setOrigin(
           modality,
           true
@@ -2672,8 +3036,6 @@ var _IdGenerator = class __IdGenerator {
 })();
 
 // node_modules/@angular/material/fesm2022/core.mjs
-var import_rxjs5 = __toESM(require_cjs(), 1);
-var import_operators4 = __toESM(require_operators(), 1);
 var _c0 = ["*", [["mat-option"], ["ng-container"]]];
 var _c1 = ["*", "mat-option, ng-container"];
 var _c2 = ["text"];
@@ -2712,6 +3074,17 @@ function MatOption_Conditional_6_Template(rf, ctx) {
 var _c5 = ["mat-internal-form-field", ""];
 var _c6 = ["*"];
 var VERSION = new Version("19.2.1");
+var AnimationCurves = class {
+  static STANDARD_CURVE = "cubic-bezier(0.4,0.0,0.2,1)";
+  static DECELERATION_CURVE = "cubic-bezier(0.0,0.0,0.2,1)";
+  static ACCELERATION_CURVE = "cubic-bezier(0.4,0.0,1,1)";
+  static SHARP_CURVE = "cubic-bezier(0.4,0.0,0.6,1)";
+};
+var AnimationDurations = class {
+  static COMPLEX = "375ms";
+  static ENTERING = "225ms";
+  static EXITING = "195ms";
+};
 var MATERIAL_SANITY_CHECKS = new InjectionToken("mat-sanity-checks", {
   providedIn: "root",
   factory: () => true
@@ -2782,7 +3155,7 @@ var NOT_IMPLEMENTED = "Method not implemented";
 var DateAdapter = class {
   /** The locale to use for all dates. */
   locale;
-  _localeChanges = new import_rxjs5.Subject();
+  _localeChanges = new Subject();
   /** A stream that emits when the locale changes. */
   localeChanges = this._localeChanges;
   /**
@@ -3392,6 +3765,23 @@ var MatLine = class _MatLine {
     }]
   }], null, null);
 })();
+function setLines(lines, element, prefix = "mat") {
+  lines.changes.pipe(startWith(lines)).subscribe(({
+    length
+  }) => {
+    setClass(element, `${prefix}-2-line`, false);
+    setClass(element, `${prefix}-3-line`, false);
+    setClass(element, `${prefix}-multi-line`, false);
+    if (length === 2 || length === 3) {
+      setClass(element, `${prefix}-${length}-line`, true);
+    } else if (length > 3) {
+      setClass(element, `${prefix}-multi-line`, true);
+    }
+  });
+}
+function setClass(element, className, isAdd) {
+  element.nativeElement.classList.toggle(className, isAdd);
+}
 var MatLineModule = class _MatLineModule {
   static ɵfac = function MatLineModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MatLineModule)();
@@ -4257,7 +4647,7 @@ var MatOption = class _MatOption {
   /** Element containing the option's text. */
   _text;
   /** Emits when the state of the option changes and any parents have to be notified. */
-  _stateChanges = new import_rxjs5.Subject();
+  _stateChanges = new Subject();
   constructor() {
     const styleLoader = inject(_CdkPrivateStyleLoader);
     styleLoader.load(_StructuralStylesLoader);
@@ -4543,6 +4933,29 @@ var MatOption = class _MatOption {
     }]
   });
 })();
+function _countGroupLabelsBeforeOption(optionIndex, options, optionGroups) {
+  if (optionGroups.length) {
+    let optionsArray = options.toArray();
+    let groups = optionGroups.toArray();
+    let groupCounter = 0;
+    for (let i = 0; i < optionIndex + 1; i++) {
+      if (optionsArray[i].group && optionsArray[i].group === groups[groupCounter]) {
+        groupCounter++;
+      }
+    }
+    return groupCounter;
+  }
+  return 0;
+}
+function _getOptionScrollPosition(optionOffset, optionHeight, currentScrollPosition, panelHeight) {
+  if (optionOffset < currentScrollPosition) {
+    return optionOffset;
+  }
+  if (optionOffset + optionHeight > currentScrollPosition + panelHeight) {
+    return Math.max(0, optionOffset - panelHeight + optionHeight);
+  }
+  return currentScrollPosition;
+}
 var MatOptionModule = class _MatOptionModule {
   static ɵfac = function MatOptionModule_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MatOptionModule)();
@@ -4764,19 +5177,63 @@ var _MatInternalFormField = class __MatInternalFormField {
 })();
 
 export {
+  ENTER,
   ESCAPE,
+  SPACE,
+  LEFT_ARROW,
+  UP_ARROW,
+  RIGHT_ARROW,
+  DOWN_ARROW,
+  A,
   hasModifierKey,
   ObserversModule,
   BreakpointObserver,
   Breakpoints,
+  addAriaReferencedId,
+  removeAriaReferencedId,
+  ActiveDescendantKeyManager,
   LiveAnnouncer,
   FocusMonitor,
   _IdGenerator,
+  VERSION,
+  AnimationCurves,
+  AnimationDurations,
+  MATERIAL_SANITY_CHECKS,
   MatCommonModule,
   _ErrorStateTracker,
+  MAT_DATE_LOCALE,
+  MAT_DATE_LOCALE_FACTORY,
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  NativeDateAdapter,
+  MAT_NATIVE_DATE_FORMATS,
+  NativeDateModule,
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+  ShowOnDirtyErrorStateMatcher,
   ErrorStateMatcher,
   _StructuralStylesLoader,
+  MatLine,
+  setLines,
+  MatLineModule,
+  RippleState,
+  RippleRef,
+  defaultRippleAnimationConfig,
+  RippleRenderer,
+  MAT_RIPPLE_GLOBAL_OPTIONS,
+  MatRipple,
   MatRippleModule,
-  MatRippleLoader
+  MatPseudoCheckbox,
+  MatPseudoCheckboxModule,
+  MAT_OPTION_PARENT_COMPONENT,
+  MAT_OPTGROUP,
+  MatOptgroup,
+  MatOptionSelectionChange,
+  MatOption,
+  _countGroupLabelsBeforeOption,
+  _getOptionScrollPosition,
+  MatOptionModule,
+  MatRippleLoader,
+  _MatInternalFormField
 };
-//# sourceMappingURL=chunk-DHA2HE7C.js.map
+//# sourceMappingURL=chunk-ZZTWXWUJ.js.map
