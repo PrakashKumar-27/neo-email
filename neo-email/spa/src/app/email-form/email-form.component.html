@@ -12,23 +12,29 @@
         </div>
         <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
             <mat-form-field appearance="outline" class="full-width">
-                <mat-label>To</mat-label>
-                <input matInput formControlName="to" type="email" placeholder="Enter recipient's email">
+                <mat-label>Recipient Email</mat-label>
+                <input matInput formControlName="to" type="email" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Select Email Template</mat-label>
+                <mat-select formControlName="template" (selectionChange)="onTemplateChange($event.value)">
+                    <mat-option *ngFor="let template of templates" [value]="template.value">{{ template.label
+                        }}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Subject</mat-label>
-                <input matInput formControlName="subject" placeholder="Enter email subject">
+                <input matInput formControlName="subject" required>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Message</mat-label>
-                <textarea matInput formControlName="body" rows="5" placeholder="Enter your message"></textarea>
+                <textarea matInput formControlName="body" rows="5" required></textarea>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" [disabled]="emailForm.invalid">
-                <mat-icon>send</mat-icon> Send Email
-            </button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="emailForm.invalid">Send Email</button>
         </form>
     </mat-card-content>
 </mat-card>
