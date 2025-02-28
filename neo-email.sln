@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "neo-email", "neo-email\neo-email.csproj", "{CEA08790-20DF-4D6D-AE4C-2E32C30733DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEA08790-20DF-4D6D-AE4C-2E32C30733DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA08790-20DF-4D6D-AE4C-2E32C30733DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA08790-20DF-4D6D-AE4C-2E32C30733DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA08790-20DF-4D6D-AE4C-2E32C30733DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {397977CA-ABFC-4E7B-BA1C-03AB9B4A2FB8}
+	EndGlobalSection
+EndGlobal

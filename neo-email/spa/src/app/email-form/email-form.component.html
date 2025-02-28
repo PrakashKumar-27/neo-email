@@ -1,0 +1,34 @@
+<mat-card class="email-card">
+    <mat-card-title>
+        <mat-toolbar color="primary">
+            <mat-icon>email</mat-icon>
+            <span>Send Email</span>
+        </mat-toolbar>
+    </mat-card-title>
+
+    <mat-card-content>
+        <div *ngIf="successMessage" class="success-message">
+            {{ successMessage }}
+        </div>
+        <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>To</mat-label>
+                <input matInput formControlName="to" type="email" placeholder="Enter recipient's email">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Subject</mat-label>
+                <input matInput formControlName="subject" placeholder="Enter email subject">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Message</mat-label>
+                <textarea matInput formControlName="body" rows="5" placeholder="Enter your message"></textarea>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="emailForm.invalid">
+                <mat-icon>send</mat-icon> Send Email
+            </button>
+        </form>
+    </mat-card-content>
+</mat-card>
